@@ -13,7 +13,7 @@ public class BFS_exp {
         while (!(q.isEmpty())) {
             Pair<int[], Integer> p = q.poll();
             nodes_expanded += 1;
-            for (Integer i : Utils.getNeighbours(p.val1)) {
+            for (Integer i : BoardOperations.getNeighbours(p.val1)) {
                 int[] newboard = BoardOperations.move_board(i, p.val1 );
                 q.add(new Pair(newboard, p.val2 + 1));
                 if (GoalStateChecker.checkGoalState(newboard)) {

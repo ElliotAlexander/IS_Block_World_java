@@ -28,7 +28,7 @@ public class IterativeDeepening {
             if(p.val2 == max_depth){
                 return false;
             }
-            for (Integer i : Utils.getNeighbours(p.val1)) {
+            for (Integer i : BoardOperations.getNeighbours(p.val1)) {
                 int[] newboard = BoardOperations.move_board(i, p.val1 );
                 q.add(new Pair(newboard, p.val2 + 1));
                 if (GoalStateChecker.checkGoalState(newboard)) {

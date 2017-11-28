@@ -12,10 +12,10 @@ public class DFS {
         int[] current = start;
 
         while(!(GoalStateChecker.checkGoalState(current))){
-            Integer current_agent = Utils.getAgentIndex(current);
+            Integer current_agent = BoardOperations.getAgentIndex(current);
             nodes_expanded += 1;
 
-            Integer[] neighbours = Utils.getNeighbours(current);
+            Integer[] neighbours = BoardOperations.getNeighbours(current);
             int next = -1;
             for(int x : neighbours){
                 if(!(x > 15 || x < 0 || x == previous)){
