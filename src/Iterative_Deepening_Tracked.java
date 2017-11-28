@@ -1,11 +1,13 @@
+import java.util.HashMap;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
-public class IterativeDeepening {
+public class Iterative_Deepening_Tracked {
 
     private int nodes_expanded;
     private int[] complete_board;
     private int depth;
+
 
     public void IterativeDeepening(int[] starting_board){
         int n = 1;
@@ -22,7 +24,9 @@ public class IterativeDeepening {
 
     private boolean IterativeDeepeningAux(int max_depth, int[] startState){
         Queue<Pair<int[], Integer>> q = new ArrayBlockingQueue<>(100000000);
-        q.add(new Pair(startState, 0));
+        HashMap<Pair, Pair> parents = new HashMap<>();
+        Pair current = new Pair(startState, 0);
+        q.add(current);
         while (!(q.isEmpty())) {
             Pair<int[], Integer> p = q.poll();
             nodes_expanded += 1;
@@ -33,10 +37,20 @@ public class IterativeDeepening {
             }
             for (Integer i : BoardOperations.getNeighbours(p.val1)) {
                 int[] newboard = BoardOperations.move_board(i, p.val1 );
-                q.add(new Pair(newboard, p.val2 + 1));
+                Pair next = new Pair(newboard, p.val2 + 1);
+                q.add(next);
+                parents.put(next, p);
                 if (GoalStateChecker.checkGoalState(newboard)) {
                     depth = p.val2 + 1;
                     complete_board = newboard;
+
+                    Pair<int[], Integer> x = next;
+                    while(x != null){
+                        Logger.Log("\n----- Start ---- \n");
+                        Utils.printBoard(x.val1);
+                        x = parents.get(x);
+                        Logger.Log("\n----- End ----\n");
+                    }
                     return true;
                 }
             }

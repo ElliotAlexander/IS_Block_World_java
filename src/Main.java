@@ -1,5 +1,3 @@
-import java.io.IOException;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -25,22 +23,18 @@ public class Main {
         //int[] completecase = {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3, -1};
         //Utils.printBoard(completecase);
 
-
-        System.out.println("Ready?");
-        try {
-            System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         //AStar asa = new AStar();
         //asa.AStarStart(startState);
 
         //BFS bfse = new BFS();
         //bfse.BFS(startState);
-        //bfse.printComplete();
 
-       //IterativeDeepening ids = new IterativeDeepening();
+
+      //Iterative_Deepening ids = new Iterative_Deepening();
        //ids.IterativeDeepening(startState);
+
+        Iterative_Deepening_Tracked idst = new Iterative_Deepening_Tracked();
+        idst.IterativeDeepening(startState);
 
         //AStar as = new AStar();
         //as.runAStart(startState);
@@ -48,8 +42,14 @@ public class Main {
         //Logger.Log(Logger.Level.INFO, String.valueOf(as.fn(newstate)));
 
 
-        DFS_GraphSearch dfs = new DFS_GraphSearch();
-        dfs.DFS_iterative(startState);
+        //DFS_GraphSearch dfs = new DFS_GraphSearch();
+        //dfs.DFS_iterative(startState);
+
+
+        //DFS dfs = new DFS();
+        //dfs.DFS_iterative(startState);
+
+
 
     }
 }
