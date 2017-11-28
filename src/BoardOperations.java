@@ -22,7 +22,6 @@ public class BoardOperations {
         }
     }
 
-
     private static Integer[] getNeighbours(Integer n, int agent){
         Integer[] newindexes = {agent+1, agent-1, agent - n, agent+n };
         BoardOperations.Move[] moves = {BoardOperations.Move.RIGHT, BoardOperations.Move.LEFT, BoardOperations.Move.DOWN, BoardOperations.Move.UP};

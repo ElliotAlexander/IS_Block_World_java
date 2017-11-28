@@ -3,7 +3,6 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class BFS {
 
-    int[] complete_board = null;
     int nodes_expanded = 0;
     int depth = 0;
 
@@ -16,22 +15,15 @@ public class BFS {
             for (Integer i : BoardOperations.getNeighbours(p.val1)) {
                 int[] newboard = BoardOperations.move_board(i, p.val1 );
                 q.add(new Pair(newboard, p.val2 + 1));
+
+                // GOAL STATE
                 if (GoalStateChecker.checkGoalState(newboard)) {
                     depth = p.val2 + 1;
-                    complete_board = newboard;
-                    return;
+                    Logger.Log(Logger.Level.INFO, "Nodes expanded: " + nodes_expanded);
+                    Logger.Log(Logger.Level.INFO, "Depth : " + depth);
+                    Utils.printBoard(newboard);
                 }
             }
-        }
-    }
-
-    public void printComplete(){
-        if(complete_board == null){
-            Logger.Log(Logger.Level.ERROR,"Run DFS first!");
-        } else {
-            Utils.printBoard(complete_board);
-            Logger.Log(Logger.Level.INFO, "Nodes expanded: " + nodes_expanded);
-            Logger.Log(Logger.Level.INFO, "Depth : " + depth);
         }
     }
 }

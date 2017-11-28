@@ -41,6 +41,8 @@ public class Utils {
         Logger.LogLine("");
     }
 
+
+    // Used in A*
     public static int manhatten_distance(int start, int index){
         int[] icoords = {index % GoalStateChecker.N, (index - index % GoalStateChecker.N) / GoalStateChecker.N};
         int[] goalcoords = {start % GoalStateChecker.N, (start - (start % GoalStateChecker.N)) / GoalStateChecker.N};

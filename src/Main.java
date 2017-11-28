@@ -32,8 +32,8 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        AStar asa = new AStar();
-        asa.AStarStart(startState);
+        //AStar asa = new AStar();
+        //asa.AStarStart(startState);
 
         //BFS bfse = new BFS();
         //bfse.BFS(startState);
@@ -48,10 +48,8 @@ public class Main {
         //Logger.Log(Logger.Level.INFO, String.valueOf(as.fn(newstate)));
 
 
-        //DFS dfs = new DFS();
-        //dfs.DFS_iterative(startState);
+        DFS_GraphSearch dfs = new DFS_GraphSearch();
+        dfs.DFS_iterative(startState);
 
-        //dfs.printComplete();
-        //dfs.printMoves();
     }
 }

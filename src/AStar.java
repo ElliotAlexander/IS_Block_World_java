@@ -44,18 +44,19 @@ public class AStar {
 
             if(GoalStateChecker.checkGoalState(current.board)){
                 BoardPosition next = current;
+                int count = 0;
                 Logger.Log(Logger.Level.INFO, " ---- Process ----");
-                while(next.parent != null){
-                    Utils.printBoard(next.parent.board);
+                while(next != null){
+                    Utils.printBoard(next.board);
                     next = next.parent;
                     System.out.println("");
+                    count += 1;
                 }
 
+                Logger.Log(Logger.Level.INFO, "Complete in " + count + " iterations.");
                 Logger.Log(Logger.Level.INFO, "Final board: ");
                 Utils.printBoard(current.board);
-
-
-                System.out.println("Done!");
+                Logger.Log(Logger.Level.INFO, "Done!");
                 return;
             }
 
@@ -88,7 +89,6 @@ public class AStar {
                 }
 
                 if(openlistcontains) {
-
                     // IF THERES A MORE EFFICIENT PATH TO WHERE WE'VE BEEN - STOPS LOOPS
                     if (newbp.finalcost < openlistnew.finalcost) {
                         openlist.remove(openlistnew);
