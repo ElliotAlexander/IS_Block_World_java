@@ -1,3 +1,4 @@
+import java.io.IOException;
 
 public class Main {
 
@@ -17,26 +18,32 @@ public class Main {
         Utils.printBoard(startState);
 
 
-        int[] newstate = {0,0,0,0, 0,1,0,0, 0,2,0,0, 0,3,-1,0};
-        Utils.printBoard(newstate);
+        //int[] newstate = {0,0,0,0, 0,1,0,0, 0,2,0,0, 0,3,-1,0};
+        //Utils.printBoard(newstate);
 
 
         //int[] completecase = {0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 2, 0, 0, 0, 3, -1};
         //Utils.printBoard(completecase);
 
 
-        //AStar ash = new  AStar();
-        //Logger.Log(Logger.Level.INFO, String.valueOf(ash.gn(completecase)));
+        System.out.println("Ready?");
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        AStar asa = new AStar();
+        asa.AStarStart(startState);
 
-        //BFS_exp bfse = new BFS_exp();
+        //BFS bfse = new BFS();
         //bfse.BFS(startState);
         //bfse.printComplete();
 
        //IterativeDeepening ids = new IterativeDeepening();
        //ids.IterativeDeepening(startState);
 
-        AStar as = new AStar();
-        as.runAStart(startState);
+        //AStar as = new AStar();
+        //as.runAStart(startState);
        // Logger.Log(Logger.Level.INFO, String.valueOf(as.fn(startState)));
         //Logger.Log(Logger.Level.INFO, String.valueOf(as.fn(newstate)));
 

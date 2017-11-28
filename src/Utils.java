@@ -40,4 +40,10 @@ public class Utils {
         }
         Logger.LogLine("");
     }
+
+    public static int manhatten_distance(int start, int index){
+        int[] icoords = {index % GoalStateChecker.N, (index - index % GoalStateChecker.N) / GoalStateChecker.N};
+        int[] goalcoords = {start % GoalStateChecker.N, (start - (start % GoalStateChecker.N)) / GoalStateChecker.N};
+        return  Math.abs(icoords[0] - goalcoords[0]) + Math.abs(icoords[1] - goalcoords[1]);
+    }
 }

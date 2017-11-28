@@ -1,131 +1,120 @@
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.PriorityQueue;
 
 public class AStar {
 
-    private int nodes_Expanded;
+    class BoardPosition implements Comparable<BoardPosition>{
 
-    public int fn(int[] board, int[] starting_agent){
-        int sum = 0;
-        int current_agent = BoardOperations.getAgentIndex(board);
+        int g = 0;
+        Integer finalcost = 0;
+        int[] board;
+        BoardPosition parent;
 
-        int[] current_agent_coords = {current_agent % GoalStateChecker.N, (current_agent - (current_agent % GoalStateChecker.N)) / GoalStateChecker.N};
-
-        for(int i =0; i < board.length; i++){
-            if(board[i] != 0 && board[i] != -1) {
-
-                int goal = GoalStateChecker.getGoalState(board[i]);
-                int[] icoords = {i % GoalStateChecker.N, (i - i % GoalStateChecker.N) / GoalStateChecker.N};
-                //Logger.Log(Logger.Level.INFO, "Current coordinates : (" + icoords[0] + "," + icoords[1]);
-                int[] goalcoords = {goal % GoalStateChecker.N, (goal - (goal % GoalStateChecker.N)) / GoalStateChecker.N};
-                //Logger.Log(Logger.Level.INFO, "Goal coordinates : (" + goalcoords[0] + "," + goalcoords[1] + ")");
-                int distance = Math.abs(icoords[0] - goalcoords[0]) + Math.abs(icoords[1] - goalcoords[1]);
-                //Logger.Log(Logger.Level.INFO, "Distance: " + distance);
-                sum += distance;
-            }
-        }
-        sum += 1;
-        return sum;
-    }
-
-    class BoardPosition implements Comparable<BoardPosition> {
-
-        public int[] board;
-        public Integer cost;
-        public BoardPosition parent;
-
-        public BoardPosition(int[] board, Integer cost, BoardPosition parent){
+        public BoardPosition(int[] board){
             this.board = board;
-            this.cost = cost;
-            this.parent = parent;
         }
 
         @Override
-        public int compareTo(BoardPosition input){
-            return this.cost.compareTo(input.cost);
+        public int compareTo(BoardPosition o) {
+            return this.finalcost.compareTo(o.finalcost);
         }
-
-        @Override
-        public boolean equals(Object input){
-            BoardPosition inputbp = (BoardPosition)input;
-            return this.board.equals(inputbp.board);
-        }
-
     }
 
+    PriorityQueue<BoardPosition> openlist;
+    ArrayList<BoardPosition> closedlist;
 
-    public void runAStart(int[] board){
-        int escape = 0;
 
-        int agent = BoardOperations.getAgentIndex(board);
-        int[] starting_agent = {agent % GoalStateChecker.N, (agent - (agent % GoalStateChecker.N)) / GoalStateChecker.N};
+    public void AStarStart(int[] startPosition){
+        openlist = new PriorityQueue<>();
+        closedlist = new ArrayList<>();
 
-        TreeSet<BoardPosition> openList = new TreeSet<>();
-        TreeSet<BoardPosition> closedList = new TreeSet<>();
-        openList.add(new BoardPosition(board, 10000, null));
-        while(!openList.isEmpty()){
+        BoardPosition start = new BoardPosition(startPosition);
+        start.finalcost = 0;
+        openlist.add(start);
 
-            if(escape == 1000){
+
+        BoardPosition current;
+        while(true){
+            current = openlist.poll();
+
+            if(current == null){
                 break;
-            } else {
-                escape += 1;
             }
-
-            BoardPosition current = openList.pollFirst();
-            Logger.Log("Loading new board position.");
-            Utils.printBoard(current.board);
 
             if(GoalStateChecker.checkGoalState(current.board)){
-                System.out.println("YOU DID IT");
+                BoardPosition next = current;
+                Logger.Log(Logger.Level.INFO, " ---- Process ----");
+                while(next.parent != null){
+                    Utils.printBoard(next.parent.board);
+                    next = next.parent;
+                    System.out.println("");
+                }
+
+                Logger.Log(Logger.Level.INFO, "Final board: ");
                 Utils.printBoard(current.board);
+
+
+                System.out.println("Done!");
                 return;
             }
 
-            closedList.add(current);
-            for(int i : BoardOperations.getNeighbours(current.board)){
-                int[] neighbour = BoardOperations.move_board(i, current.board);
-                int f = fn(neighbour, starting_agent);
-                BoardPosition newpos = new BoardPosition(neighbour, f, current);
+            for(int neighbourindex : BoardOperations.getNeighbours(current.board)){
+                int[] pos = BoardOperations.move_board(neighbourindex, current.board);
+                BoardPosition newbp = new BoardPosition(pos);
+                newbp.finalcost = hn(pos) + current.g;
+                newbp.g = current.g + 1;
+                newbp.parent = current;
+
 
                 boolean openlistcontains = false;
-                BoardPosition openlistneighbour = null;
-                for(BoardPosition p : openList){
-                    if(p.equals(newpos)){
-                        openlistneighbour = p;
+                BoardPosition openlistnew = null;
+                for(BoardPosition bp : openlist){
+                    if(Arrays.equals(pos, bp.board)){
                         openlistcontains = true;
+                        openlistnew = bp;
                         break;
                     }
                 }
 
                 boolean closedlistcontains = false;
-                for(BoardPosition p: closedList){
-                    if(p.equals(newpos)){
+                BoardPosition closedlistnew = null;
+                for(BoardPosition bp : closedlist){
+                    if(Arrays.equals(pos, bp.board)){
                         closedlistcontains = true;
+                        closedlistnew = bp;
                         break;
                     }
                 }
 
+                if(openlistcontains) {
 
-                if(!closedlistcontains){
-                 if(!openlistcontains){
-                     openList.add(newpos);
-                 } else {
-                     if(openlistneighbour.cost > f){
-                         openList.remove(openlistneighbour);
-                         openList.add(newpos);
-                     }
-                 }
+                    // IF THERES A MORE EFFICIENT PATH TO WHERE WE'VE BEEN - STOPS LOOPS
+                    if (newbp.finalcost < openlistnew.finalcost) {
+                        openlist.remove(openlistnew);
+                        openlist.add(newbp);
+                        break;
+                    }
+                } else if(closedlistcontains){
+                    if(newbp.finalcost < closedlistnew.finalcost){
+                        closedlist.remove(closedlistnew);
+                        openlist.add(closedlistnew);
+                        break;
+                    }
+                } else {
+                    openlist.add(newbp);
                 }
             }
-            Logger.Log(Logger.Level.INFO, "Closed list size : " + closedList.size());
         }
-        int a = 1;
-        for(BoardPosition x : closedList){
-            Logger.Log(Logger.Level.INFO, "Board " + a);
-            Utils.printBoard(x.board);
-            a++;
-        }
-        System.out.println("No solution found");
     }
 
+    public int hn(int[] board){
+        int sum = 0;
+        for(int i =0; i < board.length; i++){
+            if(board[i] != 0 && board[i] != -1) {
+                sum += Utils.manhatten_distance(i, GoalStateChecker.getGoalState(board[i]));
+            }
+        }
+        return sum;
+    }
 }

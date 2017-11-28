@@ -1,61 +1,37 @@
-
-
-/** EMBRACE THE GLORIFIED GRAPH SEARCH
- *
- *
- * This is seriously a super glorifeid graph search.
- *
- *
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class BFS {
 
-    ArrayList<int[]> seenStates;
     int[] complete_board = null;
+    int nodes_expanded = 0;
+    int depth = 0;
 
     public void BFS(int[] startState) {
-        seenStates = new ArrayList<>();
-        Queue<int[]> q = new ArrayBlockingQueue<>(100000);
-        q.add(startState.clone());
-        seenStates.add(startState.clone());
-
+        Queue<Pair<int[], Integer>> q = new ArrayBlockingQueue<>(100000000);
+        q.add(new Pair(startState, 0));
         while (!(q.isEmpty())) {
-            int[] v = q.poll();
-            outerloop:
-            for (Integer i : Utils.getNeighbours(v)) {
-
-                // generate the new board
-                int[] newboard = BoardOperations.move_board(i, v);
-
-                // Have we been in this state before
-                for (int[] seenstate : seenStates) {
-                    if(Arrays.equals(seenstate, newboard)){
-                        continue outerloop;
-                    }
-                }
-
-                // add the new board to the queue
-                q.add(newboard.clone());
-                seenStates.add(newboard.clone());
+            Pair<int[], Integer> p = q.poll();
+            nodes_expanded += 1;
+            for (Integer i : BoardOperations.getNeighbours(p.val1)) {
+                int[] newboard = BoardOperations.move_board(i, p.val1 );
+                q.add(new Pair(newboard, p.val2 + 1));
                 if (GoalStateChecker.checkGoalState(newboard)) {
-                    complete_board = newboard.clone();
+                    depth = p.val2 + 1;
+                    complete_board = newboard;
                     return;
                 }
             }
         }
     }
 
-
     public void printComplete(){
         if(complete_board == null){
             Logger.Log(Logger.Level.ERROR,"Run DFS first!");
         } else {
             Utils.printBoard(complete_board);
-            Logger.Log(Logger.Level.INFO, "States explored : " + seenStates.size());
+            Logger.Log(Logger.Level.INFO, "Nodes expanded: " + nodes_expanded);
+            Logger.Log(Logger.Level.INFO, "Depth : " + depth);
         }
     }
 }
-**/
