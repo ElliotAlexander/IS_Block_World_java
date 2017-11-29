@@ -1,4 +1,7 @@
-import jdk.internal.util.xml.impl.Input;
+import org.omg.PortableInterceptor.INACTIVE;
+
+import java.io.IOException;
+import java.util.Arrays;
 
 public class Main {
 
@@ -16,38 +19,61 @@ public class Main {
         //int[] startState = {-1,0,0,0, 0,0,1,0, 0,0,2,0, 0,0,3,0};
         //Utils.printBoard(startState);
 
-        for(String s : args){
-            switch (s){
-                case "-M":
-                    Logger.MINIMAL_OUTPUT = true;
-                    Logger.Lo
+        int[] startState = null, goal_states = null;
+        InputParser ip = new InputParser();
+        GoalStateChecker gsc = null;
+
+
+        for(int i = 0; i < args.length; i++) {
+            switch (args[i]) {
+                case "-B":
+                    startState = ip.parse_string(args[i+1]);
+                    Logger.Log(Logger.Level.INFO, "Loaded board: \n");
+                    Utils.printBoard(startState, GoalStateChecker.N);
+                    break;
+                case "-G":
+                    goal_states = ip.parse_string(args[i+1]);
+                    gsc = new GoalStateChecker(goal_states);
+                    break;
+                case "-N":
+                    GoalStateChecker.N = Integer.parseInt(args[i+1]);
+                    Logger.Log(Logger.Level.INFO, "Loaded board size " + GoalStateChecker.N );
+                    break;
+                default:
+                    break;
             }
         }
 
+        Long startTime = System.currentTimeMillis();
 
-        InputParser ip = new InputParser();
-        int[] startState = ip.parse_string(args[0]);
-        int[] goal_states = ip.parse_string(args[1]);
-        GoalStateChecker gsc = new GoalStateChecker(goal_states);
 
-        Logger.Log(Logger.Level.INFO, "Loaded board: \n");
-        Utils.printBoard(startState);
 
+        startState = new int[]  {0,-1,0,0,0,0,1,0,0,2,0,0,3,0,0,0};
+        goal_states = new int[]{5,9,13};
+        gsc = new GoalStateChecker(goal_states);
 
 
 
 
-        //BFS bfse = new BFS();
+        if(gsc == null || startState == null || goal_states == null){
+            Logger.Log(Logger.Level.ERROR, "Couldn't parse starting or goal states!");
+            Logger.Log(Logger.Level.ERROR, "Printing to console: \nStart states:" + Arrays.toString(startState) + "\ngoalstates: " + Arrays.toString(goal_states));
+            return;
+        }
+
+
+
+        //BFS bfse = new BFS(gsc);
         //bfse.BFS(startState);
 
 
-      //Iterative_Deepening ids = new Iterative_Deepening();
-       //ids.IterativeDeepening(startState);
+        //Iterative_Deepening ids = new Iterative_Deepening(gsc);
+        //ids.IterativeDeepening(startState);
 
-        //Iterative_Deepening_Tracked idst = new Iterative_Deepening_Tracked();
+        //Iterative_Deepening_Tracked idst = new Iterative_Deepening_Tracked(gsc);
         //idst.IterativeDeepening(startState);
 
-        //AStar as = new AStar();
+        //AStar as = new AStar(gsc);
         //as.AStarStart(startState);
 
 
@@ -56,10 +82,12 @@ public class Main {
         //dfs.DFS_iterative(startState);
 
 
-        //DFS dfs = new DFS();
-        //dfs.DFS_iterative(startState);
+        DFS dfs = new DFS(gsc);
+        dfs.DFS_iterative(startState);
 
+        Long endtime = System.currentTimeMillis();
 
+        System.out.println("Completion time: " + (endtime - startTime));
 
     }
 }
