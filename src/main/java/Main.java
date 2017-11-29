@@ -1,10 +1,10 @@
 public class Main {
 
     public static void main(String[] args) {
-        new Main();
+        new Main(args);
     }
 
-    public Main(){
+    public Main(String[] args){
         Logger.Log(Logger.Level.INFO, "initialising starting board...");
 
         // 5x5
