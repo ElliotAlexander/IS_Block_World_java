@@ -13,8 +13,16 @@ public class Main {
         //int[] startState = {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,2,3,-1,0};
 
         // 4x4
-        //int[] startState = {-1,0,0,0, 0,0,0,0, 0,0,0,0, 1,2,3,0};
+        //int[] startState = {-1,0,0,0, 0,0,1,0, 0,0,2,0, 0,0,3,0};
         //Utils.printBoard(startState);
+
+        for(String s : args){
+            switch (s){
+                case "-M":
+                    Logger.MINIMAL_OUTPUT = true;
+                    Logger.Lo
+            }
+        }
 
 
         InputParser ip = new InputParser();
@@ -44,8 +52,8 @@ public class Main {
 
 
 
-        DFS_GraphSearch dfs = new DFS_GraphSearch(gsc);
-        dfs.DFS_iterative(startState);
+        //DFS_GraphSearch dfs = new DFS_GraphSearch(gsc);
+        //dfs.DFS_iterative(startState);
 
 
         //DFS dfs = new DFS();

@@ -22,7 +22,7 @@ public class Iterative_Deepening_Tracked {
         }
         Logger.Log(Logger.Level.INFO, "Success!");
         Logger.Log(Logger.Level.INFO, "Depth : " + depth);
-        Logger.Log(Logger.Level.INFO, "Nodes expanded: " + nodes_expanded);
+        Logger.Log(Logger.Level.ESSENTIALINFO, "Nodes expanded: " + nodes_expanded);
         Utils.printBoard(complete_board);
     }
 

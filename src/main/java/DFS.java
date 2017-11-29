@@ -33,6 +33,6 @@ public class DFS {
 
         Logger.Log(Logger.Level.INFO,  "\n ---- End ----\n");
         Utils.printBoard(current);
-        Logger.Log(Logger.Level.INFO, "Nodes expanded: " + nodes_expanded);
+        Logger.Log(Logger.Level.ESSENTIALINFO, "Nodes expanded: " + nodes_expanded);
     }
 }

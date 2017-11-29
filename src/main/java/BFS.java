@@ -26,7 +26,7 @@ public class BFS {
                 // GOAL STATE
                 if (gsc.checkGoalState(newboard)) {
                     depth = p.val2 + 1;
-                    Logger.Log(Logger.Level.INFO, "Nodes expanded: " + nodes_expanded);
+                    Logger.Log(Logger.Level.ESSENTIALINFO, "Nodes expanded: " + nodes_expanded);
                     Logger.Log(Logger.Level.INFO, "Depth : " + depth);
                     Utils.printBoard(newboard);
                     return;

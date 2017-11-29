@@ -40,7 +40,7 @@ public class DFS_GraphSearch {
             }
             Logger.Log(Logger.Level.INFO, " ---- End ----");
             Utils.printBoard(current);
-            Logger.Log(Logger.Level.INFO, "Nodes expanded: " + nodes_expanded);
+            Logger.Log(Logger.Level.ESSENTIALINFO, "Nodes expanded: " + nodes_expanded);
             Logger.Log(Logger.Level.INFO, "Repeats avoided: " + repeats_avoided);
     }
 }

@@ -9,7 +9,7 @@ public class GoalStateChecker {
         goal_States = new HashMap<Integer, Integer>();
         int index = 1;
         for(int i : goal_states_input){
-            goal_States.put(index, i);
+            goal_States.put(i, index);
             Logger.Log(Logger.Level.INFO, "Added goal state with index " + i + " for tile number " + index);
             index++;
         }
