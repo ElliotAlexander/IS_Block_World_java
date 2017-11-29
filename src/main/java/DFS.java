@@ -2,14 +2,21 @@ import java.util.ArrayList;
 
 public class DFS {
 
-    ArrayList<BoardOperations.Move> moves = new ArrayList<>();
-    private int nodes_expanded = 0;
+    private GoalStateChecker gsc;
+
+    public DFS(GoalStateChecker gsc){
+        this.gsc = gsc;
+    }
+
+
 
     public void DFS_iterative(int[] start ){
+        int nodes_expanded = 0;
+        ArrayList<BoardOperations.Move> moves = new ArrayList<>();
 
         Logger.Log(Logger.Level.INFO, "Beginning DFS Search.");
         int[] current = start;
-        while(!(GoalStateChecker.checkGoalState(current))){
+        while(!(gsc.checkGoalState(current))){
             Integer current_agent = BoardOperations.getAgentIndex(current);
             nodes_expanded += 1;
 

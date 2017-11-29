@@ -1,3 +1,5 @@
+import jdk.internal.util.xml.impl.Input;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -11,7 +13,16 @@ public class Main {
         //int[] startState = {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,2,3,-1,0};
 
         // 4x4
-        int[] startState = {-1,0,0,0, 0,0,0,0, 0,0,0,0, 1,2,3,0};
+        //int[] startState = {-1,0,0,0, 0,0,0,0, 0,0,0,0, 1,2,3,0};
+        //Utils.printBoard(startState);
+
+
+        InputParser ip = new InputParser();
+        int[] startState = ip.parse_string(args[0]);
+        int[] goal_states = ip.parse_string(args[1]);
+        GoalStateChecker gsc = new GoalStateChecker(goal_states);
+
+        Logger.Log(Logger.Level.INFO, "Loaded board: \n");
         Utils.printBoard(startState);
 
 
@@ -33,7 +44,7 @@ public class Main {
 
 
 
-        DFS_GraphSearch dfs = new DFS_GraphSearch();
+        DFS_GraphSearch dfs = new DFS_GraphSearch(gsc);
         dfs.DFS_iterative(startState);
 
 

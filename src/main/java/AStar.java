@@ -6,7 +6,11 @@ public class AStar {
 
     // Spaghetti code incoming
 
-    int nodes_expanded = 0;
+    private GoalStateChecker gsc;
+
+    public AStar(GoalStateChecker gsc){
+        this.gsc = gsc;
+    }
 
     class BoardPosition implements Comparable<BoardPosition>{
 
@@ -28,7 +32,6 @@ public class AStar {
     PriorityQueue<BoardPosition> openlist;
     ArrayList<BoardPosition> closedlist;
 
-
     public void AStarStart(int[] startPosition){
         openlist = new PriorityQueue<>();
         closedlist = new ArrayList<>();
@@ -36,7 +39,7 @@ public class AStar {
         BoardPosition start = new BoardPosition(startPosition);
         start.finalcost = 0;
         openlist.add(start);
-
+        int nodes_expanded = 0;
 
         BoardPosition current;
         while(true){
@@ -49,7 +52,7 @@ public class AStar {
             nodes_expanded += 1;
 
             // COMPLETE STATE
-            if(GoalStateChecker.checkGoalState(current.board)){
+            if(gsc.checkGoalState(current.board)){
                 BoardPosition next = current;
                 int count = 0;
                 Logger.LogLine("");
@@ -123,7 +126,7 @@ public class AStar {
         int sum = 0;
         for(int i =0; i < board.length; i++){
             if(board[i] != 0 && board[i] != -1) {
-                sum += Utils.manhatten_distance(i, GoalStateChecker.getGoalState(board[i]));
+                sum += Utils.manhatten_distance(i, gsc.getGoalState(board[i]));
             }
         }
         return sum;

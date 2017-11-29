@@ -7,7 +7,12 @@ public class Iterative_Deepening_Tracked {
     private int nodes_expanded;
     private int[] complete_board;
     private int depth;
+    private GoalStateChecker gsc;
 
+
+    public Iterative_Deepening_Tracked(GoalStateChecker gsc){
+        this.gsc = gsc;
+    }
 
     public void IterativeDeepening(int[] starting_board){
         int n = 1;
@@ -40,7 +45,7 @@ public class Iterative_Deepening_Tracked {
                 Pair next = new Pair(newboard, p.val2 + 1);
                 q.add(next);
                 parents.put(next, p);
-                if (GoalStateChecker.checkGoalState(newboard)) {
+                if (gsc.checkGoalState(newboard)) {
                     depth = p.val2 + 1;
                     complete_board = newboard;
 

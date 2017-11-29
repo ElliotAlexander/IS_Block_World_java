@@ -3,12 +3,18 @@ import java.util.concurrent.ArrayBlockingQueue;
 
 public class BFS {
 
-    int nodes_expanded = 0;
-    int depth = 0;
+    private GoalStateChecker gsc;
+
+    public BFS(GoalStateChecker gsc){
+        this.gsc = gsc;
+    }
+
 
     public void BFS(int[] startState) {
         Queue<Pair<int[], Integer>> q = new ArrayBlockingQueue<>(100000000);
         q.add(new Pair(startState, 0));
+        int nodes_expanded = 0;
+        int depth = 0;
         while (!(q.isEmpty())) {
             Pair<int[], Integer> p = q.poll();
             nodes_expanded += 1;
@@ -18,7 +24,7 @@ public class BFS {
                 q.add(newPair);
 
                 // GOAL STATE
-                if (GoalStateChecker.checkGoalState(newboard)) {
+                if (gsc.checkGoalState(newboard)) {
                     depth = p.val2 + 1;
                     Logger.Log(Logger.Level.INFO, "Nodes expanded: " + nodes_expanded);
                     Logger.Log(Logger.Level.INFO, "Depth : " + depth);
