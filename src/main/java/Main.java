@@ -7,7 +7,6 @@ public class Main {
     public Main(){
         Logger.Log(Logger.Level.INFO, "initialising starting board...");
 
-
         // 5x5
         //int[] startState = {0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 1,2,3,-1,0};
 
