@@ -28,7 +28,7 @@ public class BFS {
                     depth = p.val2 + 1;
                     Logger.Log(Logger.Level.ESSENTIALINFO, "Nodes expanded: " + nodes_expanded);
                     Logger.Log(Logger.Level.INFO, "Depth : " + depth);
-                    Utils.printBoard(newboard);
+                    Utils.printBoard(newboard, GoalStateChecker.N);
                     return;
                 }
             }

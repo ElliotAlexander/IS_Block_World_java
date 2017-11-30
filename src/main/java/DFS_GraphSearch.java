@@ -20,7 +20,6 @@ public class DFS_GraphSearch {
             int[] current = start;
             while(!(gsc.checkGoalState(current))){
                 Integer current_agent = BoardOperations.getAgentIndex(current);
-
                 Integer[] neighbours = BoardOperations.getNeighbours(current);
                 int next = neighbours[Utils.generate_rand(neighbours.length)-1];
                 if(next == previous){
@@ -39,7 +38,7 @@ public class DFS_GraphSearch {
                 Logger.Log(m.toString() + " ");
             }
             Logger.Log(Logger.Level.INFO, " ---- End ----");
-            Utils.printBoard(current);
+            Utils.printBoard(current, GoalStateChecker.N);
             Logger.Log(Logger.Level.ESSENTIALINFO, "Nodes expanded: " + nodes_expanded);
             Logger.Log(Logger.Level.INFO, "Repeats avoided: " + repeats_avoided);
     }

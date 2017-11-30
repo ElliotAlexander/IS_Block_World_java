@@ -5,12 +5,8 @@ public class Logger {
 
     public enum Level {ESSENTIALINFO, INFO, ERROR, WARNING};
 
-    public static boolean MINIMAL_OUTPUT = false;
 
     public static void Log(Level level, String message){
-        if(level == Level.INFO){
-            return;
-        }
         System.out.println("[" + level + "] " + message);
     }
 

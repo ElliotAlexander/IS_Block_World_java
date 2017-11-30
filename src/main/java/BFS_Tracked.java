@@ -35,13 +35,13 @@ public class BFS_Tracked {
                     depth = p.val2 + 1;
                     Logger.Log(Logger.Level.ESSENTIALINFO, "Nodes expanded: " + nodes_expanded);
                     Logger.Log(Logger.Level.INFO, "Depth : " + depth);
-                    Utils.printBoard(newboard);
+                    Utils.printBoard(newboard, GoalStateChecker.N);
 
                     Pair<int[], Integer> next = newPair;
                     while(next != null){
 
                         Logger.Log("\n----- Start ---- \n");
-                        Utils.printBoard(next.val1);
+                        Utils.printBoard(next.val1, GoalStateChecker.N);
                         next = parents.get(next);
                         Logger.Log("\n----- End ----\n");
                     }

@@ -23,7 +23,7 @@ public class Iterative_Deepening_Tracked {
         Logger.Log(Logger.Level.INFO, "Success!");
         Logger.Log(Logger.Level.INFO, "Depth : " + depth);
         Logger.Log(Logger.Level.ESSENTIALINFO, "Nodes expanded: " + nodes_expanded);
-        Utils.printBoard(complete_board);
+        Utils.printBoard(complete_board, GoalStateChecker.N);
     }
 
 
@@ -52,7 +52,7 @@ public class Iterative_Deepening_Tracked {
                     Pair<int[], Integer> x = next;
                     while(x != null){
                         Logger.Log("\n----- Start ---- \n");
-                        Utils.printBoard(x.val1);
+                        Utils.printBoard(x.val1, GoalStateChecker.N);
                         x = parents.get(x);
                         Logger.Log("\n----- End ----\n");
                     }

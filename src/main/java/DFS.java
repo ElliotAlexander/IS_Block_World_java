@@ -22,7 +22,7 @@ public class DFS {
 
             Integer[] neighbours = BoardOperations.getNeighbours(current);
             int next = neighbours[Utils.generate_rand(neighbours.length)-1];
-            moves.add(Utils.getmove(current_agent, next, 4));
+            moves.add(Utils.getmove(current_agent, next, GoalStateChecker.N ));
             current = BoardOperations.move_board(next, current);
         }
 
@@ -32,7 +32,7 @@ public class DFS {
         }
 
         Logger.Log(Logger.Level.INFO,  "\n ---- End ----\n");
-        Utils.printBoard(current);
+        Utils.printBoard(current, GoalStateChecker.N);
         Logger.Log(Logger.Level.ESSENTIALINFO, "Nodes expanded: " + nodes_expanded);
     }
 }

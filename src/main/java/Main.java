@@ -1,6 +1,3 @@
-import org.omg.PortableInterceptor.INACTIVE;
-
-import java.io.IOException;
 import java.util.Arrays;
 
 public class Main {
@@ -47,12 +44,14 @@ public class Main {
         Long startTime = System.currentTimeMillis();
 
 
+        // This code is used to setup argument-free boards when running repeatedly.
 
-        startState = new int[]  {0,-1,0,0,0,0,1,0,0,2,0,0,3,0,0,0};
-        goal_states = new int[]{5,9,13};
+/**
+        GoalStateChecker.N = 4;
+        startState = new int[]  {1,0,0,0,0,0,0,3,0,0,-1,2,0,0,0,0};
+        goal_states = new int[] {5,9,13};
         gsc = new GoalStateChecker(goal_states);
-
-
+**/
 
 
         if(gsc == null || startState == null || goal_states == null){
@@ -66,12 +65,16 @@ public class Main {
         //BFS bfse = new BFS(gsc);
         //bfse.BFS(startState);
 
+        //BFS_Tracked bfst = new BFS_Tracked(gsc);
+        //bfst.BFS(startState);
+
+
 
         //Iterative_Deepening ids = new Iterative_Deepening(gsc);
         //ids.IterativeDeepening(startState);
 
-        //Iterative_Deepening_Tracked idst = new Iterative_Deepening_Tracked(gsc);
-        //idst.IterativeDeepening(startState);
+        Iterative_Deepening_Tracked idst = new Iterative_Deepening_Tracked(gsc);
+        idst.IterativeDeepening(startState);
 
         //AStar as = new AStar(gsc);
         //as.AStarStart(startState);
@@ -82,8 +85,8 @@ public class Main {
         //dfs.DFS_iterative(startState);
 
 
-        DFS dfs = new DFS(gsc);
-        dfs.DFS_iterative(startState);
+        //DFS dfs = new DFS(gsc);
+        //dfs.DFS_iterative(startState);
 
         Long endtime = System.currentTimeMillis();
 

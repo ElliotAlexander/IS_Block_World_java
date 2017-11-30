@@ -21,7 +21,7 @@ public class Iterative_Deepening {
         Logger.Log(Logger.Level.INFO, "Success!");
         Logger.Log(Logger.Level.INFO, "Depth : " + depth);
         Logger.Log(Logger.Level.ESSENTIALINFO, "Nodes expanded: " + nodes_expanded);
-        Utils.printBoard(complete_board);
+        Utils.printBoard(complete_board, GoalStateChecker.N);
     }
 
 

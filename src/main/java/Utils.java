@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Random;
 
 public class Utils {
@@ -11,41 +10,34 @@ public class Utils {
 
     public static int generate_rand(int limit){
         if (previous_rand == 0) return previous_rand = rand.nextInt(limit) + 1;
-        final int rnd = rand.nextInt(limit-1) + 1;
+        if(limit == 1){ return 1;}
+        final int rnd = rand.nextInt(limit - 1) + 1;
         return previous_rand = (rnd < previous_rand? rnd : rnd + 1);
     }
 
     public static BoardOperations.Move getmove(int currentagent, int move, int n){
         if(move == currentagent - 1){
-            return   BoardOperations.Move.LEFT;
+            return   BoardOperations.Move.L;
         } else if(move == currentagent + 1){
-            return BoardOperations.Move.RIGHT;
+            return BoardOperations.Move.R;
         } else if(move == currentagent - n){
-            return BoardOperations.Move.UP;
+            return BoardOperations.Move.U;
         } else if(move == currentagent + n){
-            return BoardOperations.Move.DOWN;
+            return BoardOperations.Move.D;
         } else {
             // LETS BREAK EVERYTHING
             return null;
         }
     }
 
-    public static void printBoard(int[] board) {
+    public static void printBoard(int[] board, int N) {
         int[] currentBoard = board;
         for(int i = 0; i < currentBoard.length; i++){
-            if(i % GoalStateChecker.N == 0 && i != 0){
+            if(i % N == 0 && i != 0){
                 Logger.LogLine("");
             }
             Logger.Log("| " + currentBoard[i] + " ");
         }
         Logger.LogLine("");
-    }
-
-
-    // Used in A*
-    public static int manhatten_distance(int start, int index){
-        int[] icoords = {index % GoalStateChecker.N, (index - index % GoalStateChecker.N) / GoalStateChecker.N};
-        int[] goalcoords = {start % GoalStateChecker.N, (start - (start % GoalStateChecker.N)) / GoalStateChecker.N};
-        return  Math.abs(icoords[0] - goalcoords[0]) + Math.abs(icoords[1] - goalcoords[1]);
     }
 }
