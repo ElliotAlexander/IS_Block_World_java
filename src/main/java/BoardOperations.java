@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class BoardOperations {
 
-    public enum Move {LEFT, RIGHT, UP, DOWN}
+    public enum Move {L, R, U, D}
 
     public static int[] move_board(Integer new_index, int[] inputboard){
         int[] board = inputboard.clone();
@@ -24,7 +24,6 @@ public class BoardOperations {
 
     private static Integer[] getNeighbours(Integer n, int agent){
         Integer[] newindexes = {agent+1, agent-1, agent - n, agent+n };
-        BoardOperations.Move[] moves = {BoardOperations.Move.RIGHT, BoardOperations.Move.LEFT, BoardOperations.Move.DOWN, BoardOperations.Move.UP};
         ArrayList<Integer> returnarr = new ArrayList<>();
         for(Integer i : newindexes){
             if(!(i < 0 || i > ((n*n)-1))){

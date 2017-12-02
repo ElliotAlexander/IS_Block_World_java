@@ -6,6 +6,11 @@ public class Iterative_Deepening {
     private int nodes_expanded;
     private int[] complete_board;
     private int depth;
+    private GoalStateChecker gsc;
+
+    public Iterative_Deepening(GoalStateChecker gsc){
+        this.gsc = gsc;
+    }
 
     public void IterativeDeepening(int[] starting_board){
         int n = 1;
@@ -15,8 +20,8 @@ public class Iterative_Deepening {
         }
         Logger.Log(Logger.Level.INFO, "Success!");
         Logger.Log(Logger.Level.INFO, "Depth : " + depth);
-        Logger.Log(Logger.Level.INFO, "Nodes expanded: " + nodes_expanded);
-        Utils.printBoard(complete_board);
+        Logger.Log(Logger.Level.ESSENTIALINFO, "Nodes expanded: " + nodes_expanded);
+        Utils.printBoard(complete_board, GoalStateChecker.N);
     }
 
 
@@ -34,7 +39,7 @@ public class Iterative_Deepening {
             for (Integer i : BoardOperations.getNeighbours(p.val1)) {
                 int[] newboard = BoardOperations.move_board(i, p.val1 );
                 q.add(new Pair(newboard, p.val2 + 1));
-                if (GoalStateChecker.checkGoalState(newboard)) {
+                if (gsc.checkGoalState(newboard)) {
                     depth = p.val2 + 1;
                     complete_board = newboard;
                     return true;

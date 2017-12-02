@@ -3,7 +3,8 @@ import java.io.FileWriter;
 
 public class Logger {
 
-    public enum Level {INFO, ERROR, WARNING};
+    public enum Level {ESSENTIALINFO, INFO, ERROR, WARNING};
+
 
     public static void Log(Level level, String message){
         System.out.println("[" + level + "] " + message);

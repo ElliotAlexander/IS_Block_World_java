@@ -6,7 +6,11 @@ public class AStar {
 
     // Spaghetti code incoming
 
-    int nodes_expanded = 0;
+    private GoalStateChecker gsc;
+
+    public AStar(GoalStateChecker gsc){
+        this.gsc = gsc;
+    }
 
     class BoardPosition implements Comparable<BoardPosition>{
 
@@ -28,7 +32,6 @@ public class AStar {
     PriorityQueue<BoardPosition> openlist;
     ArrayList<BoardPosition> closedlist;
 
-
     public void AStarStart(int[] startPosition){
         openlist = new PriorityQueue<>();
         closedlist = new ArrayList<>();
@@ -36,7 +39,7 @@ public class AStar {
         BoardPosition start = new BoardPosition(startPosition);
         start.finalcost = 0;
         openlist.add(start);
-
+        int nodes_expanded = 0;
 
         BoardPosition current;
         while(true){
@@ -49,13 +52,13 @@ public class AStar {
             nodes_expanded += 1;
 
             // COMPLETE STATE
-            if(GoalStateChecker.checkGoalState(current.board)){
+            if(gsc.checkGoalState(current.board)){
                 BoardPosition next = current;
                 int count = 0;
                 Logger.LogLine("");
                 Logger.Log(Logger.Level.INFO, " ---- Process ----");
                 while(next != null){
-                    Utils.printBoard(next.board);
+                    Utils.printBoard(next.board, GoalStateChecker.N);
                     next = next.parent;
                     System.out.println("");
                     count += 1;
@@ -65,7 +68,7 @@ public class AStar {
                 Logger.Log(Logger.Level.INFO, "Complete in " + (count-1) + " iterations.");
                 Logger.Log(Logger.Level.INFO, "Nodes expanded: " + nodes_expanded);
                 Logger.Log(Logger.Level.INFO, "Final board: \n");
-                Utils.printBoard(current.board);
+                Utils.printBoard(current.board, GoalStateChecker.N);
                 Logger.LogLine("");
                 Logger.Log(Logger.Level.INFO, "Done!");
                 return;
@@ -100,7 +103,6 @@ public class AStar {
                 }
 
                 if(openlistcontains) {
-                    // IF THERES A MORE EFFICIENT PATH TO WHERE WE'VE BEEN - STOPS LOOPS
                     if (newbp.finalcost < openlistnew.finalcost) {
                         openlist.remove(openlistnew);
                         openlist.add(newbp);
@@ -119,13 +121,19 @@ public class AStar {
         }
     }
 
-    public int hn(int[] board){
-        int sum = 0;
-        for(int i =0; i < board.length; i++){
-            if(board[i] != 0 && board[i] != -1) {
-                sum += Utils.manhatten_distance(i, GoalStateChecker.getGoalState(board[i]));
+        public int hn(int[] board){
+            int sum = 0;
+            for(int i =0; i < board.length; i++){
+                if(board[i] != 0 && board[i] != -1) {
+                    sum += manhatten_distance(i, gsc.getGoalState(board[i]));
+                }
             }
+            return sum;
         }
-        return sum;
+
+    private int manhatten_distance(int start, int index){
+        int[] icoords = {index % GoalStateChecker.N, (index - index % GoalStateChecker.N) / GoalStateChecker.N};
+        int[] goalcoords = {start % GoalStateChecker.N, (start - (start % GoalStateChecker.N)) / GoalStateChecker.N};
+        return  Math.abs(icoords[0] - goalcoords[0]) + Math.abs(icoords[1] - goalcoords[1]);
     }
 }
