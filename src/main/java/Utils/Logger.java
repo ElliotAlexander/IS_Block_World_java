@@ -1,5 +1,4 @@
-import java.io.*;
-import java.io.FileWriter;
+package Utils;
 
 public class Logger {
 
