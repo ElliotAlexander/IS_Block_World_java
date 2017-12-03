@@ -1,11 +1,15 @@
+package Searches;
+
+import Utils.BoardOperations;
+import Utils.GoalStateChecker;
+import Utils.Logger;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
 public class AStar {
-
-    // Spaghetti code incoming
-
+    
     private GoalStateChecker gsc;
 
     public AStar(GoalStateChecker gsc){
@@ -58,7 +62,7 @@ public class AStar {
                 Logger.LogLine("");
                 Logger.Log(Logger.Level.INFO, " ---- Process ----");
                 while(next != null){
-                    Utils.printBoard(next.board, GoalStateChecker.N);
+                    BoardOperations.printBoard(next.board, GoalStateChecker.N);
                     next = next.parent;
                     System.out.println("");
                     count += 1;
@@ -68,7 +72,7 @@ public class AStar {
                 Logger.Log(Logger.Level.INFO, "Complete in " + (count-1) + " iterations.");
                 Logger.Log(Logger.Level.INFO, "Nodes expanded: " + nodes_expanded);
                 Logger.Log(Logger.Level.INFO, "Final board: \n");
-                Utils.printBoard(current.board, GoalStateChecker.N);
+                BoardOperations.printBoard(current.board, GoalStateChecker.N);
                 Logger.LogLine("");
                 Logger.Log(Logger.Level.INFO, "Done!");
                 return;

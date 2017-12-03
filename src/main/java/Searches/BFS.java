@@ -1,3 +1,10 @@
+package Searches;
+
+import Resources.Pair;
+import Utils.BoardOperations;
+import Utils.GoalStateChecker;
+import Utils.Logger;
+
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -28,7 +35,7 @@ public class BFS {
                     depth = p.val2 + 1;
                     Logger.Log(Logger.Level.ESSENTIALINFO, "Nodes expanded: " + nodes_expanded);
                     Logger.Log(Logger.Level.INFO, "Depth : " + depth);
-                    Utils.printBoard(newboard, GoalStateChecker.N);
+                    BoardOperations.printBoard(newboard, GoalStateChecker.N);
                     return;
                 }
             }

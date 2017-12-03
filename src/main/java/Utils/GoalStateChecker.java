@@ -1,3 +1,5 @@
+package Utils;
+
 import java.util.HashMap;
 
 public class GoalStateChecker {

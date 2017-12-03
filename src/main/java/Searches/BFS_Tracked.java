@@ -1,15 +1,21 @@
+package Searches;
+
+import Resources.Pair;
+import Utils.BoardOperations;
+import Utils.GoalStateChecker;
+import Utils.Logger;
+
 import java.util.HashMap;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
 
-// This version of BFS is considerably slower, and uses a fair bit more memory, but will give steps
+// This version of Searches.BFS is considerably slower, and uses a fair bit more memory, but will give steps
 // Rather than just find the solution.
 
 public class BFS_Tracked {
 
     private GoalStateChecker gsc;
-
     public BFS_Tracked(GoalStateChecker gsc){
         this.gsc = gsc;
     }
@@ -35,13 +41,13 @@ public class BFS_Tracked {
                     depth = p.val2 + 1;
                     Logger.Log(Logger.Level.ESSENTIALINFO, "Nodes expanded: " + nodes_expanded);
                     Logger.Log(Logger.Level.INFO, "Depth : " + depth);
-                    Utils.printBoard(newboard, GoalStateChecker.N);
+                    BoardOperations.printBoard(newboard, GoalStateChecker.N);
 
                     Pair<int[], Integer> next = newPair;
                     while(next != null){
 
                         Logger.Log("\n----- Start ---- \n");
-                        Utils.printBoard(next.val1, GoalStateChecker.N);
+                        BoardOperations.printBoard(next.val1, GoalStateChecker.N);
                         next = parents.get(next);
                         Logger.Log("\n----- End ----\n");
                     }

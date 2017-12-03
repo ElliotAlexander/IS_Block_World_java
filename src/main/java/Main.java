@@ -1,3 +1,8 @@
+import Searches.Iterative_Deepening_Tracked;
+import Utils.BoardOperations;
+import Utils.GoalStateChecker;
+import Utils.Logger;
+
 import java.util.Arrays;
 
 public class Main {
@@ -14,7 +19,7 @@ public class Main {
 
         // 4x4
         //int[] startState = {-1,0,0,0, 0,0,1,0, 0,0,2,0, 0,0,3,0};
-        //Utils.printBoard(startState);
+        //..printBoard(startState);
 
         int[] startState = null, goal_states = null;
         InputParser ip = new InputParser();
@@ -26,7 +31,7 @@ public class Main {
                 case "-B":
                     startState = ip.parse_string(args[i+1]);
                     Logger.Log(Logger.Level.INFO, "Loaded board: \n");
-                    Utils.printBoard(startState, GoalStateChecker.N);
+                    BoardOperations.printBoard(startState, GoalStateChecker.N);
                     break;
                 case "-G":
                     goal_states = ip.parse_string(args[i+1]);
@@ -44,16 +49,6 @@ public class Main {
         Long startTime = System.currentTimeMillis();
 
 
-        // This code is used to setup argument-free boards when running repeatedly.
-
-/**
-        GoalStateChecker.N = 4;
-        startState = new int[]  {1,0,0,0,0,0,0,3,0,0,-1,2,0,0,0,0};
-        goal_states = new int[] {5,9,13};
-        gsc = new GoalStateChecker(goal_states);
-**/
-
-
         if(gsc == null || startState == null || goal_states == null){
             Logger.Log(Logger.Level.ERROR, "Couldn't parse starting or goal states!");
             Logger.Log(Logger.Level.ERROR, "Printing to console: \nStart states:" + Arrays.toString(startState) + "\ngoalstates: " + Arrays.toString(goal_states));
@@ -62,30 +57,30 @@ public class Main {
 
 
 
-        //BFS bfse = new BFS(gsc);
-        //bfse.BFS(startState);
+        //Searches.BFS bfse = new Searches.BFS(gsc);
+        //bfse.Searches.BFS(startState);
 
-        //BFS_Tracked bfst = new BFS_Tracked(gsc);
-        //bfst.BFS(startState);
+        //Searches.BFS_Tracked bfst = new Searches.BFS_Tracked(gsc);
+        //bfst.Searches.BFS(startState);
 
 
 
-        //Iterative_Deepening ids = new Iterative_Deepening(gsc);
+        //Searches.Iterative_Deepening ids = new Searches.Iterative_Deepening(gsc);
         //ids.IterativeDeepening(startState);
 
         Iterative_Deepening_Tracked idst = new Iterative_Deepening_Tracked(gsc);
         idst.IterativeDeepening(startState);
 
-        //AStar as = new AStar(gsc);
+        //Searches.AStar as = new Searches.AStar(gsc);
         //as.AStarStart(startState);
 
 
 
-        //DFS_GraphSearch dfs = new DFS_GraphSearch(gsc);
+        //Searches.DFS_GraphSearch dfs = new Searches.DFS_GraphSearch(gsc);
         //dfs.DFS_iterative(startState);
 
 
-        //DFS dfs = new DFS(gsc);
+        //Searches.DFS dfs = new Searches.DFS(gsc);
         //dfs.DFS_iterative(startState);
 
         Long endtime = System.currentTimeMillis();

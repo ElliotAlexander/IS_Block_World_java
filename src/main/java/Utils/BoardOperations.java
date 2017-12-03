@@ -1,3 +1,5 @@
+package Utils;
+
 import java.util.ArrayList;
 
 public class BoardOperations {
@@ -39,5 +41,31 @@ public class BoardOperations {
     public static Integer[] getNeighbours(int[] board){
         int agent = getAgentIndex(board);
         return getNeighbours(GoalStateChecker.N, agent);
+    }
+
+    public static Move getmove(int currentagent, int move, int n){
+        if(move == currentagent - 1){
+            return Move.L;
+        } else if(move == currentagent + 1){
+            return Move.R;
+        } else if(move == currentagent - n){
+            return Move.U;
+        } else if(move == currentagent + n){
+            return Move.D;
+        } else {
+            // LETS BREAK EVERYTHING
+            return null;
+        }
+    }
+
+    public static void printBoard(int[] board, int N) {
+        int[] currentBoard = board;
+        for(int i = 0; i < currentBoard.length; i++){
+            if(i % N == 0 && i != 0){
+                Logger.LogLine("");
+            }
+            Logger.Log("| " + currentBoard[i] + " ");
+        }
+        Logger.LogLine("");
     }
 }
